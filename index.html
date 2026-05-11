@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glance Studios — HMI Interface Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════
+       MOBILE TOP BAR
+  ════════════════════════════════════════════ -->
+  <div class="mobile-nav-bar" id="mobileNavBar">
+    <div class="mobile-brand">Glance <span class="ac">S</span>tudios</div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-item" data-section="home">Home</div>
+    <div class="mobile-menu-item" data-section="value">Impact</div>
+    <div class="mobile-menu-item" data-section="projects">Projects</div>
+    <div class="mobile-menu-item" data-section="services">Services</div>
+    <div class="mobile-menu-item" data-section="reviews">Reviews</div>
+    <div class="mobile-menu-item" data-section="contact">Connect</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       RIGHT STICKY NAV
+  ════════════════════════════════════════════ -->
+  <nav class="nav" id="mainNav" aria-label="Page navigation">
+    <div class="nav-item active" data-section="home">
+      <span class="nav-label">Home</span>
+    </div>
+    <div class="nav-seg"></div>
+
+    <div class="nav-item" data-section="value">
+      <span class="nav-label">Impact</span>
+    </div>
+    <div class="nav-seg"></div>
+
+    <div class="nav-item" data-section="projects">
+      <span class="nav-label">Projects</span>
+    </div>
+    <div class="nav-seg"></div>
+
+    <div class="nav-item" data-section="services">
+      <span class="nav-label">Services</span>
+    </div>
+    <div class="nav-seg"></div>
+
+    <div class="nav-item" data-section="reviews">
+      <span class="nav-label">Reviews</span>
+    </div>
+    <div class="nav-seg"></div>
+
+    <div class="nav-item" data-section="contact">
+      <span class="nav-label">Connect</span>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <section id="home">
+    <div class="hero-top">
+      <p class="hero-tagline">
+        We design intelligent control interfaces that simplify complex industrial systems. From dashboards to<br>
+        connected platforms, we turn operations into seamless, intuitive experiences.
+      </p>
+    </div>
+
+    <div class="hero-bottom">
+      <h1 class="hero-name" aria-label="Glance Studios">
+        Glance&nbsp;<span class="ac">S</span>tudios
+      </h1>
+      <p class="hero-sub">HMI Interface Design &nbsp;·&nbsp; Industrial Systems</p>
+      <div class="ambient-line" id="ambientLine" aria-hidden="true">
+        <div class="al-a" id="alA"></div>
+        <div class="al-gap"></div>
+        <div class="al-b" id="alB"></div>
+        <div class="al-gap2"></div>
+        <div class="al-c" id="alC"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       VALUE — WHY DESIGN MATTERS
+  ════════════════════════════════════════════ -->
+  <section id="value">
+
+    <div class="val-intro" data-reveal>
+      <span class="label-tag">Why It Matters</span>
+      <h2 class="val-headline">
+        Why Invest in Better Interfaces<br>for Industrial Systems<span class="ac">?</span>
+      </h2>
+    </div>
+
+    <div class="val-rows">
+
+      <div class="val-row">
+        <span class="vr-num">01</span>
+        <div class="vr-main">
+          <div class="vr-kicker">Operational</div>
+          <div class="vr-title-mask">
+            <h3 class="vr-title">Clarity</h3>
+          </div>
+          <div class="vr-rule"></div>
+        </div>
+        <p class="vr-desc">Well-structured interfaces reduce operator confusion by presenting critical data, controls, and system states in a clear and organized manner—especially in high-dependency industrial environments.</p>
+      </div>
+
+      <div class="val-row">
+        <span class="vr-num">02</span>
+        <div class="vr-main">
+          <div class="vr-kicker">Faster</div>
+          <div class="vr-title-mask">
+            <h3 class="vr-title">Decisions</h3>
+          </div>
+          <div class="vr-rule"></div>
+        </div>
+        <p class="vr-desc">Centralized dashboards and real-time status visibility allow operators to identify issues, track processes, and respond to changes more efficiently without navigating complex control layers.</p>
+      </div>
+
+      <div class="val-row">
+        <span class="vr-num">03</span>
+        <div class="vr-main">
+          <div class="vr-kicker">Modern Systems</div>
+          <div class="vr-title-mask">
+            <h3 class="vr-title">Interfaces</h3>
+          </div>
+          <div class="vr-rule"></div>
+        </div>
+        <p class="vr-desc">As automation systems become more advanced, the interface becomes a critical part of usability—making advanced hardware and automation easier to manage in real-world conditions.</p>
+      </div>
+
+    </div>
+
+    <!-- ── Before / After Slider ── -->
+    <div class="ba-wrap" data-reveal>
+      <div class="ba-label-row">
+        <span class="ba-tag label-tag">See The Difference</span>
+      </div>
+      <div class="ba-slider" id="baSlider">
+        <div class="ba-after">
+          <img src="assets/images/furnace-after.png" alt="After: redesigned furnace control panel" draggable="false">
+        </div>
+        <div class="ba-before" id="baBefore">
+          <img src="assets/images/furnace-before.png" alt="Before: original furnace control panel" draggable="false">
+        </div>
+        <div class="ba-divider" id="baDivider">
+          <div class="ba-handle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 5L2 12L8 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 5L22 12L16 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <span class="ba-pill ba-pill-before">Before</span>
+        <span class="ba-pill ba-pill-after">After</span>
+      </div>
+    </div>
+
+    <div class="val-close" data-reveal>
+      <span class="val-close-rule"></span>
+      <p class="val-close-text">Good design isn't overhead.<br>It's <span class="ac">output.</span></p>
+    </div>
+
+    <div class="val-section-rule" data-reveal></div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       PROJECTS
+  ════════════════════════════════════════════ -->
+  <section id="projects">
+    <div class="projects-sticky-header">
+      <span class="label-tag">Selected Work</span>
+      <h2>Projects</h2>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- ── Card 1 ── -->
+      <a class="project-card" href="projects.html#proj-01" data-reveal>
+        <div class="card-image">
+          <img src="assets/images/Mockup-Furnace.png" alt="Furnace Control Panel mockup" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <span class="card-ghost-num">01</span>
+        </div>
+        <div class="card-body">
+          <span class="card-index">01 / Nandi Powertronics PVT LTD</span>
+          <h3 class="card-title">Furnace C<span class="ac">O</span>ntrol Panel</h3>
+          <div class="card-caps">
+            <span class="cap">UI System Design</span>
+            <span class="cap">DGUS Implementation</span>
+            <span class="cap">Local Network</span>
+          </div>
+        </div>
+        <div class="card-rule"></div>
+      </a>
+
+      <!-- ── Card 2 ── -->
+      <a class="project-card" href="projects.html#proj-02" data-reveal>
+        <div class="card-image">
+          <span class="card-ghost-num">02</span>
+        </div>
+        <div class="card-body">
+          <span class="card-index">02 / RabBan Control Solutions PVT LTD</span>
+          <h3 class="card-title">Multi-Zone <span class="ac">S</span>ensor Monitor</h3>
+          <div class="card-caps">
+            <span class="cap">Dashboard Design</span>
+            <span class="cap">Local Network</span>
+          </div>
+        </div>
+        <div class="card-rule"></div>
+      </a>
+
+      <!-- ── Card 3 ── -->
+      <a class="project-card" href="projects.html#proj-03" data-reveal>
+        <div class="card-image">
+          <img src="assets/images/Mcokup-Trough.png" alt="Trough Automation System mockup" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <span class="card-ghost-num">03</span>
+        </div>
+        <div class="card-body">
+          <span class="card-index">03 / RabBan Control Solutions PVT LTD</span>
+          <h3 class="card-title">Trough Automation <span class="ac">S</span>ystem</h3>
+          <div class="card-caps">
+            <span class="cap">Dashboard Design</span>
+            <span class="cap">DGUS Implementation</span>
+            <span class="cap">Local Network</span>
+          </div>
+        </div>
+        <div class="card-rule"></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SERVICES
+  ════════════════════════════════════════════ -->
+  <section id="services">
+    <div class="svc-section-label label-tag fade-up" data-reveal>What We Do</div>
+
+    <div class="svc-stack">
+
+      <!-- ── Panel 1 ── -->
+      <div class="svc-panel" data-svc="1">
+        <div class="svc-panel-bg-num" aria-hidden="true">01</div>
+        <div class="svc-panel-body">
+          <div class="svc-tag">Service 01</div>
+          <h3 class="svc-title">HMI Interface<br>Design & Development</h3>
+          <div class="svc-rule"></div>
+          <p class="svc-text">End-to-end UI design for customized control systems—covering dashboards, control panels, and equipment-specific screens. From concept to deployed interfaces, each system is built for real-time use, clear operator interaction, and stable performance across embedded display platforms.</p>
+          <ul class="svc-list">
+            <li>Dashboard and control panel UI design</li>
+            <li>Equipment-specific screen layouts</li>
+            <li>Embedded screen development across platforms</li>
+            <li>Touch logic, navigation flow, and system states</li>
+            <li>Readability-focused visuals (icons, color hierarchy)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── Panel 2 ── -->
+      <div class="svc-panel svc-panel--dark" data-svc="2">
+        <div class="svc-panel-bg-num" aria-hidden="true">02</div>
+        <div class="svc-panel-body">
+          <div class="svc-tag">Service 02</div>
+          <h3 class="svc-title">Local Network<br>Web Interfaces</h3>
+          <div class="svc-rule"></div>
+          <p class="svc-text">Browser-based interfaces that replicate and extend HMI data across devices on a local network. Built for quick access, low latency, and reliable monitoring without cloud dependency.</p>
+          <ul class="svc-list">
+            <li>LAN-based web UI for system monitoring and control</li>
+            <li>Real-time data sync with HMI systems</li>
+            <li>Responsive across desktop, tablet, and mobile</li>
+            <li>Alerts, logs, and live data visualization</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       REVIEWS
+  ════════════════════════════════════════════ -->
+  <section id="reviews">
+    <div class="reviews-head fade-up" data-reveal>
+      <span class="label-tag">Client Feedback</span>
+      <h2>Reviews</h2>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card" data-reveal>
+        <span class="review-q-mark">"</span>
+        <p class="review-text">
+          Really liked how clean and easy the interface turned out. Everything feels well thought out and simple to use without overcomplicating things. They stayed involved even after the main design was done and helped refine things further.
+        </p>
+        <div class="review-rule"></div>
+        <div class="review-name">Nandi Powertronics</div>
+        <div class="review-role">Operations Director</div>
+      </div>
+
+      <div class="review-card" data-reveal>
+        <span class="review-q-mark">"</span>
+        <p class="review-text">
+          They took the time to understand how our trough controller actually works, which made a big difference. Even after delivery, they kept working with us to tweak and adjust things so it fit properly during implementation.
+        </p>
+        <div class="review-rule"></div>
+        <div class="review-name">RabBan Control Solutions</div>
+        <div class="review-role">CEO</div>
+      </div>
+
+      <div style="visibility: hidden;" class="review-card" data-reveal>
+        <span class="review-q-mark">"</span>
+        <p class="review-text">
+          They understood industrial constraints immediately — no unnecessary complexity, clean operator logic, and documentation our embedded team could actually work from. Rare combination.
+        </p>
+        <div class="review-rule"></div>
+        <div class="review-name">Arvind T.</div>
+        <div class="review-role">Head of Engineering — CoreTech Systems</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       CONTACT
+  ════════════════════════════════════════════ -->
+  <section id="contact">
+    <div class="cta-block fade-up" data-reveal>
+      <div class="cta-eyebrow">Start a Project</div>
+      <h2 class="cta-headline">
+        Let's build something<br>your operators <span class="ac">won't forget.</span>
+      </h2>
+      <p class="cta-sub">
+        Every industrial operation is different. Tell us what you're working on — we respond within 24 hours.
+      </p>
+    </div>
+
+    <form class="contact-grid" id="contactForm" novalidate>
+      <div class="fg">
+        <label for="f-name">Full Name</label>
+        <input type="text" id="f-name" name="name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="fg">
+        <label for="f-email">Work Email</label>
+        <input type="email" id="f-email" name="email" placeholder="you@company.com" autocomplete="email">
+      </div>
+      <div class="fg">
+        <label for="f-company">Company</label>
+        <input type="text" id="f-company" name="company" placeholder="Company name">
+      </div>
+      <div class="fg">
+        <label for="f-industry">Industry</label>
+        <input type="text" id="f-industry" name="industry" placeholder="e.g. Automotive, Metallurgy">
+      </div>
+      <div class="fg wide">
+        <label for="f-message">Project Brief</label>
+        <textarea id="f-message" name="message" placeholder="Describe your system, what you need, and any constraints or timelines..."></textarea>
+      </div>
+      <div class="fg wide">
+        <button type="submit" class="btn">Send Brief &nbsp;→</button>
+      </div>
+    </form>
+
+    <div class="contact-phone">
+      <span class="contact-phone-label">Or reach us directly</span>
+      <a class="contact-phone-number" href="tel:+919876543210">+91 98765 43210</a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       CLOSING BAND
+  ════════════════════════════════════════════ -->
+  <div class="closing-band">
+    <span class="cb-label">Glance Studios</span>
+    <h2 class="cb-headline">
+      Precision design for<br>the <span class="ac">industrial edge.</span>
+    </h2>
+    <p class="cb-sub">
+      HMI interfaces and embedded web platforms built for operators, engineers, and the machines they depend on.
+    </p>
+    <button class="cb-cta" onclick="lenis.scrollTo(document.getElementById('contact'))">
+      Work With Us &nbsp;→
+    </button>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-brand">Glance <span class="ac">S</span>tudios</div>
+    <div class="footer-copy">© 2025 Glance Studios. All rights reserved.</div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════
+       SCRIPT
+  ════════════════════════════════════════════ -->
+  <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Glance Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+  <style>
+    /* ─── PAGE BASE ───────────────────────────────── */
+    body { overflow-x: hidden; }
+
+    /* ─── STICKY HEADER ───────────────────────────── */
+    .proj-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      padding: 0 64px;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 48px;
+    }
+
+    .ph-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--ink);
+      padding: 22px 0;
+      white-space: nowrap;
+
+      & .ph-back {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: color 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &::before {
+          content: '←';
+          font-size: 14px;
+          color: var(--primary);
+          display: inline-block;
+          transition: transform 0.35s var(--ease);
+        }
+      }
+
+      &:hover .ph-back { color: var(--primary); }
+      &:hover .ph-back::before { transform: translateX(-5px); }
+    }
+
+    .ph-brand-name {
+      font-family: 'Sifonn', 'Futura', 'Century Gothic', sans-serif;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      & .ac { color: var(--primary); }
+    }
+
+    .ph-divider {
+      width: 1px;
+      background: var(--rule);
+      align-self: stretch;
+    }
+
+    /* ─── TABS ────────────────────────────────────── */
+    .ph-tabs {
+      display: flex;
+      align-items: stretch;
+      position: relative;
+    }
+
+    /* sliding indicator — JS positions it */
+    .tab-indicator {
+      position: absolute;
+      bottom: 0;
+      height: 2px;
+      background: var(--primary);
+      pointer-events: none;
+      transition: left 0.45s var(--ease), width 0.45s var(--ease);
+      will-change: left, width;
+    }
+
+    .ph-tab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 28px;
+      cursor: pointer;
+      position: relative;
+      border: none;
+      background: none;
+      font-family: 'Urbanist', sans-serif;
+      border-right: 1px solid var(--rule);
+      transition: background 0.25s ease;
+
+      &:first-child { border-left: 1px solid var(--rule); }
+
+      & .tab-num {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--primary);
+        opacity: 0.45;
+        transition: opacity 0.35s ease;
+      }
+
+      &.active .tab-num { opacity: 1; }
+
+      & .tab-name {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: color 0.3s ease;
+      }
+
+      &.active .tab-name { color: var(--ink); }
+      &:hover .tab-name  { color: var(--ink); }
+      &:hover            { background: rgba(0,0,0,0.025); }
+    }
+
+    /* ─── PANELS ──────────────────────────────────── */
+    .proj-panel {
+      display: none;
+    }
+
+    .proj-panel.active {
+      display: block;
+      animation: panelFade 0.25s ease both;
+    }
+
+    @keyframes panelFade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── HERO ENTRANCE (triggered by .entered) ───── */
+    .proj-panel .art-eyebrow {
+      opacity: 0;
+      transform: translateY(-14px);
+      transition: opacity 0.65s var(--ease) 0.05s, transform 0.65s var(--ease) 0.05s;
+    }
+
+    .proj-panel .art-title {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.85s var(--ease) 0.16s, transform 0.85s var(--ease) 0.16s;
+    }
+
+    .proj-panel .art-caps .cap {
+      opacity: 0;
+      transform: translateY(10px) scale(0.94);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease),
+                  color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .proj-panel .art-caps .cap:nth-child(1) { transition-delay: 0.30s, 0.30s, 0s, 0s; }
+    .proj-panel .art-caps .cap:nth-child(2) { transition-delay: 0.37s, 0.37s, 0s, 0s; }
+    .proj-panel .art-caps .cap:nth-child(3) { transition-delay: 0.44s, 0.44s, 0s, 0s; }
+    .proj-panel .art-caps .cap:nth-child(4) { transition-delay: 0.51s, 0.51s, 0s, 0s; }
+    .proj-panel .art-caps .cap:nth-child(5) { transition-delay: 0.58s, 0.58s, 0s, 0s; }
+
+    .proj-panel .art-lead {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.75s var(--ease) 0.42s, transform 0.75s var(--ease) 0.42s;
+    }
+
+    /* when .entered → all animate in */
+    .proj-panel.entered .art-eyebrow,
+    .proj-panel.entered .art-title,
+    .proj-panel.entered .art-lead {
+      opacity: 1;
+      transform: none;
+    }
+
+    .proj-panel.entered .art-caps .cap {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── ARTICLE HERO ────────────────────────────── */
+    .art-hero {
+      padding: 80px 48px 64px;
+      border-bottom: 1px solid var(--rule);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .art-hero-left {
+      & .art-eyebrow {
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        &::after {
+          content: '';
+          display: block;
+          height: 1px;
+          width: 0;
+          background: var(--primary);
+          transition: width 0.7s var(--ease) 0.5s;
+        }
+      }
+
+      & .art-title {
+        font-family: 'Sifonn', 'Futura', 'Century Gothic', sans-serif;
+        font-size: clamp(36px, 5.5vw, 72px);
+        font-weight: 400;
+        letter-spacing: 0.03em;
+        line-height: 0.95;
+        text-transform: uppercase;
+        margin-bottom: 36px;
+
+        & .ac { color: var(--primary); }
+      }
+
+      & .art-caps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        & .cap {
+          font-size: 9px;
+          font-weight: 600;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
+          color: var(--muted);
+          border: 1px solid var(--rule);
+          padding: 5px 13px;
+          border-radius: 100px;
+
+          &:hover {
+            color: var(--primary);
+            border-color: rgba(255,105,29,0.3);
+          }
+        }
+      }
+    }
+
+    /* eyebrow line extends when entered */
+    .proj-panel.entered .art-eyebrow::after { width: 32px; }
+
+    .art-hero-right { display: none; }
+
+    /* lead lives below caps now */
+    .art-lead {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      max-width: 640px;
+    }
+
+    /* ─── ARTICLE BODY ────────────────────────────── */
+    .art-body {
+      padding: 0 48px 100px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ─── SCROLL REVEAL BASE ──────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+
+    [data-reveal].visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── ART-SECTION SPLIT REVEAL ────────────────── */
+    .art-section[data-reveal] {
+      opacity: 0;
+      transform: none; /* override — handled by children */
+    }
+
+    .art-section[data-reveal] .as-label {
+      opacity: 0;
+      transform: translateX(-18px);
+      transition: opacity 0.65s var(--ease) 0.05s, transform 0.65s var(--ease) 0.05s;
+    }
+
+    .art-section[data-reveal] .as-content {
+      opacity: 0;
+      transform: translateX(18px);
+      transition: opacity 0.65s var(--ease) 0.15s, transform 0.65s var(--ease) 0.15s;
+    }
+
+    .art-section[data-reveal].visible {
+      opacity: 1;
+    }
+
+    .art-section[data-reveal].visible .as-label,
+    .art-section[data-reveal].visible .as-content {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── IMAGE BLOCK REVEAL ──────────────────────── */
+    .art-image[data-reveal] {
+      opacity: 0;
+      transform: translateY(36px) scale(0.985);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+
+    .art-image[data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* ─── IMAGE BLOCK ─────────────────────────────── */
+    .art-image {
+      margin: 72px 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+
+      & .ai-inner {
+        background: #0e0e1c;
+        background-image: radial-gradient(circle, rgba(255,105,29,0.07) 1px, transparent 1px);
+        background-size: 22px 22px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        will-change: transform;
+        transition: transform 0.1s linear;
+        /* cursor glow vars */
+        --mx: 50%;
+        --my: 50%;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,105,29,0.09) 0%, transparent 55%);
+        }
+
+        /* cursor-tracking glow */
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at var(--mx) var(--my),
+            rgba(255,105,29,0.18) 0%, transparent 55%);
+          opacity: 0;
+          transition: opacity 0.45s ease;
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        &:hover::after { opacity: 1; }
+      }
+
+      & .ai-ghost {
+        font-family: 'Sifonn', sans-serif;
+        color: rgba(255,255,255,0.04);
+        line-height: 1;
+        pointer-events: none;
+        user-select: none;
+        position: relative;
+        z-index: 1;
+      }
+
+      & .ai-caption {
+        margin-top: 14px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &::before {
+          content: '';
+          display: block;
+          width: 20px;
+          height: 1px;
+          background: var(--primary);
+          transition: width 0.5s var(--ease);
+        }
+      }
+
+      &.visible .ai-caption::before { width: 32px; }
+
+      &.wide .ai-inner { aspect-ratio: 21/9; }
+      &.half .ai-inner { aspect-ratio: 4/3; }
+
+      & .ai-ghost.lg { font-size: clamp(80px, 14vw, 180px); }
+      & .ai-ghost.sm { font-size: clamp(60px, 10vw, 130px); }
+    }
+
+    /* ─── IMAGE GRID ──────────────────────────────── */
+    .art-image-grid {
+      margin: 72px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+
+      /* stagger the two images */
+      & .art-image:nth-child(2)[data-reveal] {
+        transition-delay: 0.12s;
+      }
+    }
+
+    /* ─── TEXT SECTIONS ───────────────────────────── */
+    .art-section {
+      padding: 56px 0;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 64px;
+
+      & .as-label {
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--primary);
+        padding-top: 4px;
+      }
+
+      & .as-content {
+        & h3 {
+          font-family: 'Sifonn', 'Futura', 'Century Gothic', sans-serif;
+          font-size: clamp(18px, 2vw, 24px);
+          font-weight: 400;
+          letter-spacing: 0.04em;
+          margin-bottom: 20px;
+          line-height: 1.2;
+        }
+
+        & p {
+          font-size: 15px;
+          line-height: 1.85;
+          color: var(--muted);
+          margin-bottom: 20px;
+          max-width: 560px;
+
+          &:last-child { margin-bottom: 0; }
+        }
+
+        & ul {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 20px;
+
+          & li {
+            font-size: 14px;
+            color: var(--ink);
+            padding-left: 22px;
+            position: relative;
+            line-height: 1.55;
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: 0;
+              top: 9px;
+              width: 8px;
+              height: 1.5px;
+              background: var(--primary);
+            }
+          }
+        }
+      }
+    }
+
+    /* ─── SPEC TABLE ──────────────────────────────── */
+    .art-specs {
+      padding: 56px 0;
+      border-top: 1px solid var(--rule);
+
+      & .spec-label {
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 32px;
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+
+      &.visible .spec-label {
+        opacity: 1;
+        transform: none;
+      }
+
+      & .spec-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border: 1px solid var(--rule);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      & .spec-item {
+        padding: 24px 28px;
+        border-right: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.55s var(--ease), transform 0.55s var(--ease),
+                    background 0.25s ease;
+
+        &:nth-child(3n) { border-right: none; }
+        &:nth-last-child(-n+3) { border-bottom: none; }
+        &:hover { background: rgba(255,105,29,0.04); }
+
+        & .si-key {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 8px;
+          transition: color 0.25s ease;
+        }
+
+        & .si-val {
+          font-size: 15px;
+          font-weight: 600;
+          color: var(--ink);
+          letter-spacing: 0.01em;
+          transition: color 0.25s ease;
+        }
+
+        &:hover .si-key { color: var(--primary); }
+        &:hover .si-val { color: var(--primary); }
+      }
+
+      /* stagger spec items when parent becomes visible */
+      &.visible .spec-item:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.08s,  0.08s,  0s, 0s; }
+      &.visible .spec-item:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.14s,  0.14s,  0s, 0s; }
+      &.visible .spec-item:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.20s,  0.20s,  0s, 0s; }
+      &.visible .spec-item:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.26s,  0.26s,  0s, 0s; }
+      &.visible .spec-item:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.32s,  0.32s,  0s, 0s; }
+      &.visible .spec-item:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.38s,  0.38s,  0s, 0s; }
+    }
+
+    /* ─── PROJECT NAV ─────────────────────────────── */
+    .proj-nav {
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .pn-item {
+      padding: 40px 48px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &:first-child { border-right: 1px solid var(--rule); }
+      &:hover { background: rgba(0,0,0,0.025); }
+      &.pn-next { align-items: flex-end; }
+
+      & .pn-dir {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      &.pn-prev .pn-dir::before {
+        content: '←';
+        font-size: 12px;
+        display: inline-block;
+        transition: transform 0.35s var(--ease);
+      }
+      &.pn-prev:hover .pn-dir::before { transform: translateX(-5px); }
+
+      &.pn-next .pn-dir::after {
+        content: '→';
+        font-size: 12px;
+        display: inline-block;
+        transition: transform 0.35s var(--ease);
+      }
+      &.pn-next:hover .pn-dir::after { transform: translateX(5px); }
+
+      & .pn-name {
+        font-family: 'Sifonn', 'Futura', 'Century Gothic', sans-serif;
+        font-size: clamp(16px, 2vw, 22px);
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink);
+        transition: color 0.3s ease;
+      }
+
+      &:hover .pn-name { color: var(--primary); }
+    }
+
+    /* ─── SLIDESHOW ──────────────────────────────── */
+    .art-image.wide .ai-inner:has(.ai-slideshow) { aspect-ratio: 1024 / 600; }
+
+    .ai-slideshow {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .ai-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+
+      & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        pointer-events: none;
+      }
+    }
+
+    .ai-slide.active { opacity: 1; }
+
+    .ss-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 22px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease, background 0.2s ease;
+      padding: 0;
+    }
+
+    .ai-inner:hover .ss-btn { opacity: 1; }
+    .ss-btn:hover { background: rgba(255,105,29,0.75); border-color: transparent; }
+    .ss-prev { left: 14px; }
+    .ss-next { right: 14px; }
+
+    .ss-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .ss-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .ss-dot.active {
+      background: var(--primary);
+      transform: scale(1.5);
+    }
+
+    .ss-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--primary);
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* ─── NO RIGHT-NAV OVERRIDES ─────────────────── */
+    /* main.css adds right nav padding — this page has no right nav */
+    .closing-band {
+      padding-right: 64px;
+    }
+
+    footer {
+      padding-right: 64px;
+    }
+
+    /* ─── MOBILE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      .proj-header {
+        flex-direction: column;
+        padding: 0 24px;
+        gap: 0;
+      }
+
+      .ph-brand {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .ph-divider { display: none; }
+
+      .ph-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        scrollbar-width: none;
+        margin: 0 -24px;
+        padding: 0 24px;
+        &::-webkit-scrollbar { display: none; }
+      }
+
+      .ph-tab {
+        padding: 16px 20px;
+        border-right: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        &:first-child { border-left: none; }
+      }
+
+      .art-hero { padding: 48px 24px 40px; }
+      .art-lead { margin-top: 24px; padding-top: 24px; }
+      .art-body { padding: 0 24px 60px; }
+
+      .art-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 40px 0;
+      }
+
+      .art-image-grid {
+        grid-template-columns: 1fr;
+        margin: 48px 0;
+      }
+
+      .art-image { margin: 48px 0; }
+
+      .art-specs .spec-grid {
+        grid-template-columns: 1fr 1fr;
+
+        & .spec-item:nth-child(3n) { border-right: 1px solid var(--rule); }
+        & .spec-item:nth-child(2n) { border-right: none; }
+        &.visible .spec-item:nth-child(3) { transition-delay: 0.14s, 0.14s, 0s, 0s; }
+        &.visible .spec-item:nth-child(4) { transition-delay: 0.20s, 0.20s, 0s, 0s; }
+      }
+
+      .proj-nav { grid-template-columns: 1fr; }
+      .pn-item {
+        padding: 28px 24px;
+        &:first-child { border-right: none; border-bottom: 1px solid var(--rule); }
+        &.pn-next { align-items: flex-start; }
+      }
+
+      footer {
+        padding: 24px !important;
+        padding-right: 24px !important;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════
+       STICKY PROJECT HEADER + TABS
+  ════════════════════════════════════════════ -->
+  <header class="proj-header">
+    <a href="index.html" class="ph-brand">
+      <span class="ph-back">Back</span>
+      <span class="ph-brand-name">Glance <span class="ac">S</span>tudios</span>
+    </a>
+
+    <div class="ph-divider"></div>
+
+    <nav class="ph-tabs" aria-label="Project tabs">
+      <span class="tab-indicator" aria-hidden="true"></span>
+      <button class="ph-tab active" data-panel="proj-01" aria-selected="true">
+        <span class="tab-num">01</span>
+        <span class="tab-name">Trough Controller</span>
+      </button>
+      <button class="ph-tab" data-panel="proj-02" aria-selected="false">
+        <span class="tab-num">02</span>
+        <span class="tab-name">Furnace Control</span>
+      </button>
+      <button class="ph-tab" data-panel="proj-03" aria-selected="false">
+        <span class="tab-num">03</span>
+        <span class="tab-name">Sensor Monitor</span>
+      </button>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════════
+       PROJECT 01 — TROUGH CONTROLLER
+  ════════════════════════════════════════════ -->
+  <article class="proj-panel active" id="proj-01">
+
+    <div class="art-hero">
+      <div class="art-hero-left">
+        <div class="art-eyebrow">01 / Tea Processing</div>
+        <h1 class="art-title">Trough C<span class="ac">O</span>ntroller</h1>
+        <div class="art-caps">
+          <span class="cap">UI Design</span>
+          <span class="cap">Front-End Development</span>
+          <span class="cap">Local Network Access</span>
+        </div>
+        <p class="art-lead">
+          An interface layer for a single-unit tea trough system — presenting live process conditions and enabling structured control through a clear, centralized dashboard. Supports both manual interaction and scheduled operation through predefined recipes.
+        </p>
+      </div>
+    </div>
+
+    <div class="art-body">
+
+      <div class="art-image wide" data-reveal>
+        <div class="ai-inner" style="position:relative;">
+          <div class="ai-slideshow" data-slideshow="ts">
+            <div class="ai-slide active"><img src="assets/images/TS-1.png" alt="Trough controller screen 1" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-2.png" alt="Trough controller screen 2" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-3.png" alt="Trough controller screen 3" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-4.png" alt="Trough controller screen 4" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-5.png" alt="Trough controller screen 5" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-6.png" alt="Trough controller screen 6" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-7.png" alt="Trough controller screen 7" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-8.png" alt="Trough controller screen 8" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/TS-9.png" alt="Trough controller screen 9" draggable="false"></div>
+          </div>
+          <button class="ss-btn ss-prev" aria-label="Previous slide">&#8249;</button>
+          <button class="ss-btn ss-next" aria-label="Next slide">&#8250;</button>
+          <div class="ss-dots">
+            <span class="ss-dot active"></span><span class="ss-dot"></span><span class="ss-dot"></span>
+            <span class="ss-dot"></span><span class="ss-dot"></span><span class="ss-dot"></span>
+            <span class="ss-dot"></span><span class="ss-dot"></span><span class="ss-dot"></span>
+          </div>
+          <div class="ss-progress"></div>
+        </div>
+        <div class="ai-caption">Trough control dashboard — live process overview</div>
+      </div>
+
+      <div class="art-section" data-reveal>
+        <div class="as-label">Overview</div>
+        <div class="as-content">
+          <p>
+            The interface brings together multiple environmental and process inputs into one view — allowing operators to track drying conditions without needing to interpret scattered data points. Key readings such as dry bulb and wet bulb temperatures, moisture levels (current vs target), exhaust RH, and room conditions are continuously displayed alongside system status indicators.
+          </p>
+          <p>
+            Control is focused on operational elements like burner and fan management, as well as recipe-based scheduling. Operators can configure and run predefined drying cycles, monitor their progress in real time, and understand exactly what stage the system is in at any given moment. Accessible across devices within a local network — via mobile or desktop — without being tied to the physical control unit.
+          </p>
+          <ul>
+            <li>Unified dashboard for all critical drying parameters</li>
+            <li>Live comparison of current vs target moisture levels</li>
+            <li>Recipe-based scheduling with real-time progress tracking</li>
+            <li>Control over burner and fan systems</li>
+            <li>Local network access across mobile and desktop devices</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <nav class="proj-nav" data-reveal>
+      <div class="pn-item pn-prev" data-panel="proj-03">
+        <span class="pn-dir">Previous</span>
+        <span class="pn-name">Sensor Monitor</span>
+      </div>
+      <div class="pn-item pn-next" data-panel="proj-02">
+        <span class="pn-dir">Next</span>
+        <span class="pn-name">Furnace Control</span>
+      </div>
+    </nav>
+
+  </article>
+
+
+  <!-- ════════════════════════════════════════════
+       PROJECT 02 — FURNACE CONTROL SYSTEM
+  ════════════════════════════════════════════ -->
+  <article class="proj-panel" id="proj-02">
+
+    <div class="art-hero">
+      <div class="art-hero-left">
+        <div class="art-eyebrow">02 / Furnace Control</div>
+        <h1 class="art-title">Furnace C<span class="ac">O</span>ntrol<br>System</h1>
+        <div class="art-caps">
+          <span class="cap">UI Design</span>
+          <span class="cap">Front-End Development</span>
+          <span class="cap">Local Network Access</span>
+        </div>
+        <p class="art-lead">
+          An interface system for a single-unit furnace — structuring critical operational data and batch-based control into a clear, readable format. Designed for continuous operation where multiple parameters need to be monitored and adjusted without ambiguity.
+        </p>
+      </div>
+    </div>
+
+    <div class="art-body">
+
+      <div class="art-image wide" data-reveal>
+        <div class="ai-inner" style="position:relative;">
+          <div class="ai-slideshow" data-slideshow="fs">
+            <div class="ai-slide active"><img src="assets/images/FS-1.png" alt="Furnace control screen 1" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-2.png" alt="Furnace control screen 2" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-3.png" alt="Furnace control screen 3" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-4.png" alt="Furnace control screen 4" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-5.png" alt="Furnace control screen 5" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-6.png" alt="Furnace control screen 6" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-7.png" alt="Furnace control screen 7" draggable="false"></div>
+            <div class="ai-slide"><img src="assets/images/FS-8.png" alt="Furnace control screen 8" draggable="false"></div>
+          </div>
+          <button class="ss-btn ss-prev" aria-label="Previous slide">&#8249;</button>
+          <button class="ss-btn ss-next" aria-label="Next slide">&#8250;</button>
+          <div class="ss-dots">
+            <span class="ss-dot active"></span><span class="ss-dot"></span><span class="ss-dot"></span>
+            <span class="ss-dot"></span><span class="ss-dot"></span><span class="ss-dot"></span>
+            <span class="ss-dot"></span><span class="ss-dot"></span>
+          </div>
+          <div class="ss-progress"></div>
+        </div>
+        <div class="ai-caption">Furnace control dashboard — operational overview</div>
+      </div>
+
+      <div class="art-section" data-reveal>
+        <div class="as-label">Overview</div>
+        <div class="as-content">
+          <p>
+            The interface consolidates core furnace data including current temperature, power settings, voltage, current, flame and fan status, along with cycle time, runtime, and batch information. All I/O states are visible within the system, giving operators a direct view of what is active at any given moment.
+          </p>
+          <p>
+            Control is centered around batch-based operation. Operators can configure and run predefined batches, reducing the need for repeated manual adjustments. Safety-related conditions — maximum and safety temperature thresholds — are structured to ensure operational limits are always visible and logically constrained. Accessible over a local network from connected devices within the same environment.
+          </p>
+          <ul>
+            <li>Consolidated view of furnace parameters and I/O states</li>
+            <li>Batch-based operation with real-time progress tracking</li>
+            <li>Visibility of critical values: temperature, power, voltage, current</li>
+            <li>Status indicators for flame, fan, and system activity</li>
+            <li>Integrated safety thresholds within operational limits</li>
+            <li>Local network access across connected devices</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <nav class="proj-nav" data-reveal>
+      <div class="pn-item pn-prev" data-panel="proj-01">
+        <span class="pn-dir">Previous</span>
+        <span class="pn-name">Trough Controller</span>
+      </div>
+      <div class="pn-item pn-next" data-panel="proj-03">
+        <span class="pn-dir">Next</span>
+        <span class="pn-name">Sensor Monitor</span>
+      </div>
+    </nav>
+
+  </article>
+
+
+  <!-- ════════════════════════════════════════════
+       PROJECT 03 — MULTI-ZONE SENSOR MONITOR
+  ════════════════════════════════════════════ -->
+  <article class="proj-panel" id="proj-03">
+
+    <div class="art-hero">
+      <div class="art-hero-left">
+        <div class="art-eyebrow">03 / Sensor Monitoring</div>
+        <h1 class="art-title">Multi-Zone S<span class="ac">E</span>nsor<br>Monitor</h1>
+        <div class="art-caps">
+          <span class="cap">UI Design</span>
+          <span class="cap">Local Network Access</span>
+        </div>
+        <p class="art-lead">
+          An interface designed to consolidate data from multiple sensors into a single, unified dashboard — organized by user-defined zones. Different sensor types, grouped and monitored together, with a structured overview of distributed inputs across a facility.
+        </p>
+      </div>
+    </div>
+
+    <div class="art-body">
+
+      <div class="art-image wide" data-reveal>
+        <div class="ai-inner">
+          <span class="ai-ghost lg">03</span>
+        </div>
+        <div class="ai-caption">Zone dashboard — multi-sensor unified view</div>
+      </div>
+
+      <div class="art-section" data-reveal>
+        <div class="as-label">Overview</div>
+        <div class="as-content">
+          <p>
+            The interface focuses on clarity and flexibility — operators can view all connected sensors regardless of type, understand their current status, and navigate between zones without dealing with fragmented data sources. Each zone acts as a logical grouping, making it easier to interpret conditions across different areas.
+          </p>
+          <p>
+            Originally implemented for gas detection systems, the structure is adaptable to a wide range of sensor-based applications where centralized visibility is required. Accessible over a local network from connected devices within the same environment.
+          </p>
+          <ul>
+            <li>Unified dashboard for multi-sensor monitoring</li>
+            <li>Zone-based organization for structured visibility</li>
+            <li>Supports different sensor types within one system</li>
+            <li>Clear status overview across all zones</li>
+            <li>Local network accessibility across devices</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <nav class="proj-nav" data-reveal>
+      <div class="pn-item pn-prev" data-panel="proj-02">
+        <span class="pn-dir">Previous</span>
+        <span class="pn-name">Furnace Control</span>
+      </div>
+      <div class="pn-item pn-next" data-panel="proj-01">
+        <span class="pn-dir">Next</span>
+        <span class="pn-name">Trough Controller</span>
+      </div>
+    </nav>
+
+  </article>
+
+
+  <!-- ════════════════════════════════════════════
+       CLOSING BAND
+  ════════════════════════════════════════════ -->
+  <div class="closing-band">
+    <span class="cb-label">Glance Studios</span>
+    <h2 class="cb-headline">
+      Precision design for<br>the <span class="ac">industrial edge.</span>
+    </h2>
+    <p class="cb-sub">
+      HMI interfaces and embedded web platforms built for operators, engineers, and the machines they depend on.
+    </p>
+    <a href="index.html#contact" class="cb-cta" style="text-decoration:none;">
+      Work With Us &nbsp;→
+    </a>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-brand">Glance <span class="ac">S</span>tudios</div>
+    <div class="footer-copy">© 2025 Glance Studios. All rights reserved.</div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════════════
+       SCRIPT
+  ════════════════════════════════════════════ -->
+  <script>
+    /* ─── LENIS ────────────────────────────────────── */
+    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+    function lenisRaf(t) { lenis.raf(t); requestAnimationFrame(lenisRaf); }
+    requestAnimationFrame(lenisRaf);
+
+    /* ─── ELEMENTS ─────────────────────────────────── */
+    const tabs      = [...document.querySelectorAll('.ph-tab')];
+    const panels    = [...document.querySelectorAll('.proj-panel')];
+    const indicator = document.querySelector('.tab-indicator');
+    const tabsEl    = document.querySelector('.ph-tabs');
+
+    /* ─── SLIDING TAB INDICATOR ────────────────────── */
+    function moveIndicator(tab) {
+      const tr = tab.getBoundingClientRect();
+      const pr = tabsEl.getBoundingClientRect();
+      indicator.style.left  = (tr.left - pr.left) + 'px';
+      indicator.style.width = tr.width + 'px';
+    }
+
+    /* ─── INTERSECTION OBSERVER ────────────────────── */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    function observePanel(panel) {
+      panel.querySelectorAll('[data-reveal]').forEach(el => {
+        el.classList.remove('visible');
+        io.observe(el);
+      });
+    }
+
+    /* ─── PARALLAX ON SCROLL ───────────────────────── */
+    function updateParallax() {
+      const activePanel = document.querySelector('.proj-panel.active');
+      if (!activePanel) return;
+      activePanel.querySelectorAll('.art-image').forEach(img => {
+        const r = img.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        const progress = (window.innerHeight / 2 - r.top) / (window.innerHeight + r.height);
+        const offset = progress * 48;
+        img.querySelector('.ai-inner').style.transform = `translateY(${offset}px)`;
+      });
+    }
+
+    lenis.on('scroll', updateParallax);
+
+    /* ─── CURSOR GLOW ON IMAGES ────────────────────── */
+    function bindCursorGlow(scope) {
+      scope.querySelectorAll('.ai-inner').forEach(inner => {
+        inner.addEventListener('mousemove', e => {
+          const r = inner.getBoundingClientRect();
+          inner.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+          inner.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+        });
+        inner.addEventListener('mouseleave', () => {
+          inner.style.setProperty('--mx', '50%');
+          inner.style.setProperty('--my', '50%');
+        });
+      });
+    }
+
+    // bind on all panels once
+    panels.forEach(p => bindCursorGlow(p));
+
+    /* ─── PANEL SWITCH ─────────────────────────────── */
+    function switchToPanel(panelId) {
+      const targetPanel = document.getElementById(panelId);
+      if (!targetPanel || targetPanel.classList.contains('active')) return;
+
+      // deactivate current
+      panels.forEach(p => p.classList.remove('active', 'entered'));
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+
+      // activate panel
+      targetPanel.classList.add('active');
+
+      // activate matching tab + move indicator
+      const targetTab = document.querySelector(`.ph-tab[data-panel="${panelId}"]`);
+      if (targetTab) {
+        targetTab.classList.add('active');
+        targetTab.setAttribute('aria-selected', 'true');
+        moveIndicator(targetTab);
+      }
+
+      // scroll to top
+      lenis.scrollTo(0, { duration: 0.6 });
+
+      // observe reveals in new panel
+      observePanel(targetPanel);
+
+      // trigger hero entrance after paint
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          targetPanel.classList.add('entered');
+        });
+      });
+
+      // update URL hash without scroll jump
+      history.replaceState(null, '', '#' + panelId);
+    }
+
+    /* ─── TAB CLICKS ───────────────────────────────── */
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        switchToPanel(tab.dataset.panel);
+      });
+    });
+
+    /* ─── PROJ-NAV CLICKS ──────────────────────────── */
+    document.querySelectorAll('.pn-item').forEach(item => {
+      item.addEventListener('click', () => {
+        switchToPanel(item.dataset.panel);
+      });
+    });
+
+    /* ─── SLIDESHOW ───────────────────────────────── */
+    const SLIDE_INTERVAL = 3500;
+
+    function initSlideshow(ss) {
+      const slides = [...ss.querySelectorAll('.ai-slide')];
+      const inner  = ss.closest('.ai-inner');
+      const dots   = [...inner.querySelectorAll('.ss-dot')];
+      const bar    = inner.querySelector('.ss-progress');
+      let cur = 0, timer = null, paused = false;
+
+      function goTo(n) {
+        slides[cur].classList.remove('active');
+        dots[cur]?.classList.remove('active');
+        cur = ((n % slides.length) + slides.length) % slides.length;
+        slides[cur].classList.add('active');
+        dots[cur]?.classList.add('active');
+      }
+
+      function startBar() {
+        if (!bar) return;
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        bar.offsetWidth; // force reflow
+        bar.style.transition = `width ${SLIDE_INTERVAL}ms linear`;
+        bar.style.width = '100%';
+      }
+
+      function stopBar() {
+        if (!bar) return;
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+      }
+
+      function start() {
+        clearInterval(timer);
+        startBar();
+        timer = setInterval(() => { goTo(cur + 1); startBar(); }, SLIDE_INTERVAL);
+      }
+
+      function stop() {
+        clearInterval(timer);
+        stopBar();
+      }
+
+      inner.querySelector('.ss-prev')?.addEventListener('click', () => { stop(); goTo(cur - 1); start(); });
+      inner.querySelector('.ss-next')?.addEventListener('click', () => { stop(); goTo(cur + 1); start(); });
+      dots.forEach((dot, i) => dot.addEventListener('click', () => { stop(); goTo(i); start(); }));
+      inner.addEventListener('mouseenter', () => { paused = true;  stop(); });
+      inner.addEventListener('mouseleave', () => { paused = false; start(); });
+
+      ss._ssStart = start;
+      ss._ssStop  = stop;
+      start();
+    }
+
+    document.querySelectorAll('[data-slideshow]').forEach(initSlideshow);
+
+    /* ─── INIT ─────────────────────────────────────── */
+    (function init() {
+      // read hash to determine starting panel
+      const hash = window.location.hash.replace('#', '');
+      const startId = document.getElementById(hash) ? hash : 'proj-01';
+
+      // silently activate the right panel without scroll
+      panels.forEach(p => p.classList.remove('active', 'entered'));
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+
+      const startPanel = document.getElementById(startId);
+      startPanel.classList.add('active');
+
+      const startTab = document.querySelector(`.ph-tab[data-panel="${startId}"]`);
+      if (startTab) {
+        startTab.classList.add('active');
+        startTab.setAttribute('aria-selected', 'true');
+      }
+
+      // set indicator after layout
+      requestAnimationFrame(() => {
+        if (startTab) moveIndicator(startTab);
+      });
+
+      // observe reveals
+      observePanel(startPanel);
+
+      // hero entrance
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          startPanel.classList.add('entered');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
