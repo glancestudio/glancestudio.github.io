@@ -633,20 +633,40 @@
       &:hover .pn-name { color: var(--primary); }
     }
 
-    /* ─── SLIDESHOW ──────────────────────────────── */
-    .art-image.wide .ai-inner:has(.ai-slideshow) { aspect-ratio: 1024 / 600; }
-
-    .ai-slideshow {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
+    /* ─── HORIZONTAL SCROLL CAROUSEL ────────────── */
+    .hscroll-track {
+      position: relative;
+      width: 100%;
     }
 
-    .ai-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.7s ease;
+    .hscroll-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .hscroll-strip {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      will-change: transform;
+      /* padding-left and item widths set by JS */
+    }
+
+    .hscroll-item {
+      flex-shrink: 0;
+      border-radius: 2px;
+      overflow: hidden;
+      background: #0e0e1c;
+      background-image: radial-gradient(circle, rgba(255,105,29,0.07) 1px, transparent 1px);
+      background-size: 22px 22px;
+      aspect-ratio: 1024 / 600;
+      /* width set by JS */
 
       & img {
         width: 100%;
@@ -657,69 +677,57 @@
       }
     }
 
-    .ai-slide.active { opacity: 1; }
-
-    .ss-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 3;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #fff;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 22px;
-      line-height: 1;
+    .hscroll-foot {
       display: flex;
       align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.25s ease, background 0.2s ease;
-      padding: 0;
+      justify-content: space-between;
+      padding-top: 16px;
+      /* padding-left set by JS */
     }
 
-    .ai-inner:hover .ss-btn { opacity: 1; }
-    .ss-btn:hover { background: rgba(255,105,29,0.75); border-color: transparent; }
-    .ss-prev { left: 14px; }
-    .ss-next { right: 14px; }
+    .hscroll-caption {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-    .ss-dots {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
+    .hscroll-dots {
       display: flex;
       gap: 7px;
       align-items: center;
+      padding-right: 4px;
     }
 
-    .ss-dot {
+    .hscroll-dot {
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.25);
       cursor: pointer;
       transition: background 0.3s ease, transform 0.3s ease;
     }
 
-    .ss-dot.active {
+    .hscroll-dot.active {
       background: var(--primary);
       transform: scale(1.5);
     }
 
-    .ss-progress {
+    .hscroll-progress {
       position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
+      right: 0;
       height: 2px;
+      background: rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+
+    .hscroll-progress-fill {
+      height: 100%;
       width: 0%;
       background: var(--primary);
-      z-index: 4;
-      pointer-events: none;
+      transition: width 0.08s linear;
     }
 
     /* ─── NO RIGHT-NAV OVERRIDES ─────────────────── */
@@ -859,32 +867,32 @@
       </div>
     </div>
 
-    <div class="art-body">
-
-      <div class="art-image wide" data-reveal>
-        <div class="ai-inner" style="position:relative;">
-          <div class="ai-slideshow" data-slideshow="ts">
-            <div class="ai-slide active"><img src="assets/images/TS-1.png" alt="Trough controller screen 1" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-2.png" alt="Trough controller screen 2" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-3.png" alt="Trough controller screen 3" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-4.png" alt="Trough controller screen 4" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-5.png" alt="Trough controller screen 5" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-6.png" alt="Trough controller screen 6" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-7.png" alt="Trough controller screen 7" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-8.png" alt="Trough controller screen 8" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/TS-9.png" alt="Trough controller screen 9" draggable="false"></div>
-          </div>
-          <button class="ss-btn ss-prev" aria-label="Previous slide">&#8249;</button>
-          <button class="ss-btn ss-next" aria-label="Next slide">&#8250;</button>
-          <div class="ss-dots">
-            <span class="ss-dot active"></span><span class="ss-dot"></span><span class="ss-dot"></span>
-            <span class="ss-dot"></span><span class="ss-dot"></span><span class="ss-dot"></span>
-            <span class="ss-dot"></span><span class="ss-dot"></span><span class="ss-dot"></span>
-          </div>
-          <div class="ss-progress"></div>
+    <div class="hscroll-track" data-hscroll>
+      <div class="hscroll-sticky">
+        <div class="hscroll-progress"><div class="hscroll-progress-fill"></div></div>
+        <div class="hscroll-strip">
+          <div class="hscroll-item"><img src="assets/images/TS-1.png" alt="Trough controller screen 1" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-2.png" alt="Trough controller screen 2" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-3.png" alt="Trough controller screen 3" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-4.png" alt="Trough controller screen 4" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-5.png" alt="Trough controller screen 5" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-6.png" alt="Trough controller screen 6" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-7.png" alt="Trough controller screen 7" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-8.png" alt="Trough controller screen 8" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/TS-9.png" alt="Trough controller screen 9" draggable="false"></div>
         </div>
-        <div class="ai-caption">Trough control dashboard — live process overview</div>
+        <div class="hscroll-foot">
+          <div class="hscroll-caption">Trough control dashboard — live process overview</div>
+          <div class="hscroll-dots">
+            <span class="hscroll-dot active"></span><span class="hscroll-dot"></span><span class="hscroll-dot"></span>
+            <span class="hscroll-dot"></span><span class="hscroll-dot"></span><span class="hscroll-dot"></span>
+            <span class="hscroll-dot"></span><span class="hscroll-dot"></span><span class="hscroll-dot"></span>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="art-body">
 
       <div class="art-section" data-reveal>
         <div class="as-label">Overview</div>
@@ -941,31 +949,31 @@
       </div>
     </div>
 
-    <div class="art-body">
-
-      <div class="art-image wide" data-reveal>
-        <div class="ai-inner" style="position:relative;">
-          <div class="ai-slideshow" data-slideshow="fs">
-            <div class="ai-slide active"><img src="assets/images/FS-1.png" alt="Furnace control screen 1" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-2.png" alt="Furnace control screen 2" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-3.png" alt="Furnace control screen 3" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-4.png" alt="Furnace control screen 4" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-5.png" alt="Furnace control screen 5" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-6.png" alt="Furnace control screen 6" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-7.png" alt="Furnace control screen 7" draggable="false"></div>
-            <div class="ai-slide"><img src="assets/images/FS-8.png" alt="Furnace control screen 8" draggable="false"></div>
-          </div>
-          <button class="ss-btn ss-prev" aria-label="Previous slide">&#8249;</button>
-          <button class="ss-btn ss-next" aria-label="Next slide">&#8250;</button>
-          <div class="ss-dots">
-            <span class="ss-dot active"></span><span class="ss-dot"></span><span class="ss-dot"></span>
-            <span class="ss-dot"></span><span class="ss-dot"></span><span class="ss-dot"></span>
-            <span class="ss-dot"></span><span class="ss-dot"></span>
-          </div>
-          <div class="ss-progress"></div>
+    <div class="hscroll-track" data-hscroll>
+      <div class="hscroll-sticky">
+        <div class="hscroll-progress"><div class="hscroll-progress-fill"></div></div>
+        <div class="hscroll-strip">
+          <div class="hscroll-item"><img src="assets/images/FS-1.png" alt="Furnace control screen 1" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-2.png" alt="Furnace control screen 2" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-3.png" alt="Furnace control screen 3" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-4.png" alt="Furnace control screen 4" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-5.png" alt="Furnace control screen 5" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-6.png" alt="Furnace control screen 6" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-7.png" alt="Furnace control screen 7" draggable="false"></div>
+          <div class="hscroll-item"><img src="assets/images/FS-8.png" alt="Furnace control screen 8" draggable="false"></div>
         </div>
-        <div class="ai-caption">Furnace control dashboard — operational overview</div>
+        <div class="hscroll-foot">
+          <div class="hscroll-caption">Furnace control dashboard — operational overview</div>
+          <div class="hscroll-dots">
+            <span class="hscroll-dot active"></span><span class="hscroll-dot"></span><span class="hscroll-dot"></span>
+            <span class="hscroll-dot"></span><span class="hscroll-dot"></span><span class="hscroll-dot"></span>
+            <span class="hscroll-dot"></span><span class="hscroll-dot"></span>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="art-body">
 
       <div class="art-section" data-reveal>
         <div class="as-label">Overview</div>
@@ -1190,6 +1198,11 @@
       // scroll to top
       lenis.scrollTo(0, { duration: 0.6 });
 
+      // re-measure hscroll carousels (absolute position changes per panel)
+      requestAnimationFrame(() => {
+        targetPanel.querySelectorAll('[data-hscroll]').forEach(t => t._hsMeasure?.());
+      });
+
       // observe reveals in new panel
       observePanel(targetPanel);
 
@@ -1218,62 +1231,75 @@
       });
     });
 
-    /* ─── SLIDESHOW ───────────────────────────────── */
-    const SLIDE_INTERVAL = 3500;
+    /* ─── HORIZONTAL SCROLL CAROUSEL ─────────────── */
+    const HSCROLL_GAP = 20;
 
-    function initSlideshow(ss) {
-      const slides = [...ss.querySelectorAll('.ai-slide')];
-      const inner  = ss.closest('.ai-inner');
-      const dots   = [...inner.querySelectorAll('.ss-dot')];
-      const bar    = inner.querySelector('.ss-progress');
-      let cur = 0, timer = null, paused = false;
+    function initHScroll(track) {
+      const sticky   = track.querySelector('.hscroll-sticky');
+      const strip    = track.querySelector('.hscroll-strip');
+      const items    = [...track.querySelectorAll('.hscroll-item')];
+      const dots     = [...track.querySelectorAll('.hscroll-dot')];
+      const foot     = track.querySelector('.hscroll-foot');
+      const progFill = track.querySelector('.hscroll-progress-fill');
 
-      function goTo(n) {
-        slides[cur].classList.remove('active');
-        dots[cur]?.classList.remove('active');
-        cur = ((n % slides.length) + slides.length) % slides.length;
-        slides[cur].classList.add('active');
-        dots[cur]?.classList.add('active');
+      let itemW = 0, totalTravel = 0, trackAbsTop = 0;
+
+      function getLeftPad() {
+        const vw = window.innerWidth;
+        if (vw <= 640)  return 24;
+        if (vw <= 860)  return 48;
+        return (vw - 860) / 2 + 48;
       }
 
-      function startBar() {
-        if (!bar) return;
-        bar.style.transition = 'none';
-        bar.style.width = '0%';
-        bar.offsetWidth; // force reflow
-        bar.style.transition = `width ${SLIDE_INTERVAL}ms linear`;
-        bar.style.width = '100%';
+      function measure() {
+        const vw  = window.innerWidth;
+        const lp  = getLeftPad();
+        // image width = art-body content width, capped at 764px
+        itemW = Math.min(764, vw - lp * 2);
+
+        items.forEach(item => { item.style.width = itemW + 'px'; });
+        strip.style.paddingLeft = lp + 'px';
+        if (foot) foot.style.paddingLeft = lp + 'px';
+
+        totalTravel = (items.length - 1) * (itemW + HSCROLL_GAP);
+        track.style.height = (window.innerHeight + totalTravel) + 'px';
+
+        // cache absolute position — only valid when panel is visible
+        const rect = track.getBoundingClientRect();
+        if (rect.width > 0) trackAbsTop = rect.top + window.scrollY;
       }
 
-      function stopBar() {
-        if (!bar) return;
-        bar.style.transition = 'none';
-        bar.style.width = '0%';
+      function update({ scroll }) {
+        // only update when this track's panel is active
+        if (!track.closest('.proj-panel')?.classList.contains('active')) return;
+
+        const scrolled = scroll - trackAbsTop;
+        const clamped  = Math.max(0, Math.min(scrolled, totalTravel));
+
+        strip.style.transform = `translateX(${-clamped}px)`;
+
+        // active dot: which image slot is centered
+        const activeIdx = Math.min(
+          Math.round(clamped / (itemW + HSCROLL_GAP)),
+          items.length - 1
+        );
+        dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+
+        // progress bar
+        if (progFill) {
+          progFill.style.width = (totalTravel > 0 ? clamped / totalTravel * 100 : 0) + '%';
+        }
       }
 
-      function start() {
-        clearInterval(timer);
-        startBar();
-        timer = setInterval(() => { goTo(cur + 1); startBar(); }, SLIDE_INTERVAL);
-      }
+      measure();
+      window.addEventListener('resize', measure);
+      lenis.on('scroll', update);
 
-      function stop() {
-        clearInterval(timer);
-        stopBar();
-      }
-
-      inner.querySelector('.ss-prev')?.addEventListener('click', () => { stop(); goTo(cur - 1); start(); });
-      inner.querySelector('.ss-next')?.addEventListener('click', () => { stop(); goTo(cur + 1); start(); });
-      dots.forEach((dot, i) => dot.addEventListener('click', () => { stop(); goTo(i); start(); }));
-      inner.addEventListener('mouseenter', () => { paused = true;  stop(); });
-      inner.addEventListener('mouseleave', () => { paused = false; start(); });
-
-      ss._ssStart = start;
-      ss._ssStop  = stop;
-      start();
+      // expose for panel-switch re-measure
+      track._hsMeasure = measure;
     }
 
-    document.querySelectorAll('[data-slideshow]').forEach(initSlideshow);
+    document.querySelectorAll('[data-hscroll]').forEach(initHScroll);
 
     /* ─── INIT ─────────────────────────────────────── */
     (function init() {
@@ -1304,6 +1330,11 @@
 
       // observe reveals
       observePanel(startPanel);
+
+      // measure hscroll carousels after layout is ready
+      requestAnimationFrame(() => {
+        startPanel.querySelectorAll('[data-hscroll]').forEach(t => t._hsMeasure?.());
+      });
 
       // hero entrance
       requestAnimationFrame(() => {

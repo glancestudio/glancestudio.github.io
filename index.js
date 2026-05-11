@@ -1,3 +1,50 @@
+/* ─── RENDER FROM SITE DATA ──────────────────── */
+(function renderSiteData() {
+
+  /* project cards */
+  const grid = document.getElementById('projectsGrid');
+  if (grid && SITE?.projects) {
+    grid.innerHTML = SITE.projects.map(p => `
+      <a class="project-card" href="projects.html#${p.projId}" data-reveal>
+        <div class="card-image">
+          <img src="${p.image}" alt="${p.imageAlt}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <span class="card-ghost-num">${p.num}</span>
+        </div>
+        <div class="card-body">
+          <span class="card-index">${p.num} / ${p.client}</span>
+          <h3 class="card-title">${p.title}</h3>
+          <div class="card-caps">
+            ${p.caps.map(c => `<span class="cap">${c}</span>`).join('')}
+          </div>
+        </div>
+        <div class="card-rule"></div>
+      </a>
+    `).join('');
+  }
+
+  /* reviews */
+  const reviewsGrid = document.getElementById('reviewsGrid');
+  if (reviewsGrid && SITE?.reviews) {
+    reviewsGrid.innerHTML = SITE.reviews.map(r => `
+      <div class="review-card" data-reveal${r.visible ? '' : ' style="visibility:hidden;"'}>
+        <span class="review-q-mark">"</span>
+        <p class="review-text">${r.text}</p>
+        <div class="review-rule"></div>
+        <div class="review-name">${r.name}</div>
+        <div class="review-role">${r.role}</div>
+      </div>
+    `).join('');
+  }
+
+  /* phone */
+  const phoneEl = document.getElementById('contactPhone');
+  if (phoneEl && SITE?.contact) {
+    phoneEl.href        = 'tel:' + SITE.contact.phone;
+    phoneEl.textContent = SITE.contact.phoneDisplay;
+  }
+
+})();
+
 /* ─── LENIS ──────────────────────────────────── */
 const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
 function lenisRaf(time) { lenis.raf(time); requestAnimationFrame(lenisRaf); }
@@ -188,10 +235,25 @@ document.querySelectorAll('.mobile-menu-item').forEach(item => {
 })();
 
 /* ─── FORM SUBMIT ────────────────────────────── */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = this.querySelector('button[type=submit]');
-  btn.textContent = 'Sent ✓';
-  btn.style.background = '#2a2a2a';
+  btn.textContent = 'Sending…';
   btn.disabled = true;
+
+  const data = new FormData(this);
+  const res  = await fetch(this.action, {
+    method:  'POST',
+    body:    data,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  if (res.ok) {
+    btn.textContent      = 'Sent ✓';
+    btn.style.background = '#2a2a2a';
+    this.reset();
+  } else {
+    btn.textContent  = 'Failed — try again';
+    btn.disabled     = false;
+  }
 });
