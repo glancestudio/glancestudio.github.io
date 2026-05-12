@@ -7,8 +7,8 @@ const SITE = {
 
   /* ── Contact ──────────────────────────────────── */
   contact: {
-    phone:        '+919876543210',
-    phoneDisplay: '+91 98765 43210'
+    phone:        '+918277322462',
+    phoneDisplay: '+91 82773 22462',
   },
 
   /* ── Projects (display order = card order) ────── */
